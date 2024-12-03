@@ -92,26 +92,25 @@ const BookGame = () => {
     }
 
     // Select a random book as the correct answer
-
     const correctBook = books[Math.floor(Math.random() * books.length)];
+
+    // Filter out the correct book to get incorrect options
     const incorrectBooks = books.filter((book) => book.title !== correctBook.title);
-    const randomIncorrectBooks = [];
 
-    // Select two random incorrect options
-
-    for (let i = 0; i < 2; i++) {
-      const randomBook = incorrectBooks[Math.floor(Math.random() * incorrectBooks.length)];
-      randomIncorrectBooks.push(randomBook.description);
-    }
+    // Randomly select two incorrect options
+    const randomIncorrectBooks = incorrectBooks
+      .sort(() => Math.random() - 0.5) // Shuffle incorrectBooks
+      .slice(0, 2) // Take the first two as incorrect options
+      .map((book) => book.description); // Extract descriptions
 
     // Combine correct and incorrect options and shuffle them
+    const options = [...randomIncorrectBooks, correctBook.description].sort(() => Math.random() - 0.5);
 
-    const options = [...randomIncorrectBooks, correctBook.description];
-    setOptions(options.sort(() => Math.random() - 0.5)); // Shuffle options
-
-    setCurrentBook(correctBook);
+    setOptions(options); // Update options in state
+    setCurrentBook(correctBook); // Update the current book in state
     setRound(round + 1); // Increment the round counter
   };
+
 
   // Effect to fetch books or load from localStorage
   useEffect(() => {
