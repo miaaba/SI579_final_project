@@ -32,7 +32,8 @@ const QuestionCard = ({ book, options, onAnswer, onAddToWantToRead }) => {
         ))}
       </div>
       <button
-        className="btn btn-secondary mt-3"
+        className="btn btn-primary mt-3 align-self-center"
+        style={{ width: 200 }}
         onClick={() => onAddToWantToRead(book)} // Call the function with the current book
       >
         I want to read this book!
