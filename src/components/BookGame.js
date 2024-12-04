@@ -22,45 +22,52 @@ const BookGame = () => {
     return language === 'eng';
   };
 
-  // The fetchBooks function is responsible for retrieving book data from the Open Library API, processing it, and handling potential errors. It also filters out non-English books using the detectLanguage function and filters books that have the first_sentence data. The fetched books are stored in localStorage for caching.
-   const fetchBooks = () => {
-    const url = "https://openlibrary.org/search.json?q=fiction";
-    setLoading(true);
+  // The fetchBooks function is responsible for retrieving book data from the Open Library API, processing it, and handling potential errors. It also filters out non-English books using the detectLanguage function and filters books that have the first_sentence data. The fetched books are stored in localStorage for caching. The function returns an array of simplified book objects with title, author, description, and cover image.
+  const fetchBooks = async () => {
+    try {
+      setLoading(true);
 
-    return fetch(url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch books");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const englishBooks = data.docs.filter((book) =>
-          book.first_sentence && book.first_sentence.length > 0 &&
+      const response = await fetch("https://openlibrary.org/search.json?q=fiction");
+      if (!response.ok) {
+        throw new Error("Failed to fetch books");
+      }
+
+      const data = await response.json();
+
+      const englishBooks = data.docs.filter(
+        (book) =>
+          book.first_sentence &&
+          book.first_sentence.length > 0 &&
           detectLanguage(book.first_sentence[0])
-        );
-        // Map the fetched books to a simplified format. This includes the title, author, description, and cover image. If the author is not available, it defaults to "Unknown Author". If the cover image is not available, it defaults to "No cover available". The cover image is fetched by using the cover_i ID and then put into OpenLibrary's Cover API resulting in the correct book cover. The description is limited to the first 10 words of the first sentence. If the sentence is longer than 10 words, it is truncated and an ellipsis is added. If shorter, it is left as is.
-        const books = englishBooks.map((book) => ({
-          title: book.title,
-          author: book.author_name ? book.author_name.join(", ") : "Unknown Author",
-          description: `${book.first_sentence[0].split(' ').slice(0, 10).join(' ')}${book.first_sentence[0].split(' ').length > 10 ? '...' : ''}`,
-          cover: book.cover_i
-            ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
-            : "No cover available",
-        }));
+      );
 
-        localStorage.setItem("books", JSON.stringify(books));
-        setLoading(false);
-        return books;
-      })
-      .catch((error) => {
-        console.error("Error fetching books:", error);
-        setLoading(false);
-        return [];
-      });
+      // Map the fetched books to a simplified format. This includes the title, author, description, and cover image. If the author is not available, it defaults to "Unknown Author". If the cover image is not available, it defaults to "No cover available". The cover image is fetched by using the cover_i ID and then put into OpenLibrary's Cover API resulting in the correct book cover. The description is limited to the first 10 words of the first sentence. If the sentence is longer than 10 words, it is truncated and an ellipsis is added. If shorter, it is left as is.
+      const books = englishBooks.map((book) => ({
+        title: book.title,
+        author: book.author_name ? book.author_name.join(", ") : "Unknown Author",
+        description: `${book.first_sentence[0]
+          .split(" ")
+          .slice(0, 10)
+          .join(" ")}${book.first_sentence[0].split(" ").length > 10 ? "..." : ""}`,
+        cover: book.cover_i
+          ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
+          : "No cover available",
+      }));
+
+      localStorage.setItem("books", JSON.stringify(books));
+
+      setLoading(false);
+
+      return books;
+    } catch (error) {
+      console.error("Error fetching books:", error);
+      setLoading(false);
+      return [];
+    }
   };
 
-  // Effect to fetch books or load from localStorage. This effect runs once when the component is mounted. It checks if there are cached books in localStorage and loads them if available. If not, it fetches new books using the fetchBooks function. The effect also starts a new round with the fetched books.
+  // Effect to fetch books or load from localStorage. This effect runs once when the component is mounted. It checks if there are cached books in localStorage and loads them if available. If not, it fetches new books using the fetchBooks function. The effect also starts a new round with the fetched books. The empty dependency array [] ensures that the effect runs only once when the component is mounted.
+
   useEffect(() => {
     const storedBooks = localStorage.getItem("books");
     if (storedBooks) {
@@ -69,7 +76,7 @@ const BookGame = () => {
       startRound(parsedBooks);
       setLoading(false);
     } else {
-      fetchBooks("subject:fiction").then((fetchedBooks) => {
+      fetchBooks().then((fetchedBooks) => {
         if (fetchedBooks.length > 0) {
           setBooks(fetchedBooks);
           startRound(fetchedBooks);

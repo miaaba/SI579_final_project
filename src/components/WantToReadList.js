@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 const WantToReadList = ({ books, onRemove }) => {
   return (
     <div className="mt-4">
-      <h3>MyReading List</h3>
+      <h3>My Reading List</h3>
       <p className="text-muted">See a book that sounds intresting? Click the "I want to read this book!" button to create your reading list!</p>
       <ListGroup>
         {books.length === 0 ? (
