@@ -4,7 +4,7 @@ import React from "react";
 
 // It also handles the user's selection of an answer and triggers the onAnswer callback function to determine if the answer is correct.
 
-const QuestionCard = ({ book, options, onAnswer }) => {
+const QuestionCard = ({ book, options, onAnswer, onAddToWantToRead }) => {
   const handleOptionClick = (option) => {
     const isCorrect = option === book.description;
     onAnswer(isCorrect);
@@ -31,8 +31,15 @@ const QuestionCard = ({ book, options, onAnswer }) => {
           </button>
         ))}
       </div>
+      <button
+        className="btn btn-secondary mt-3"
+        onClick={() => onAddToWantToRead(book)} // Call the function with the current book
+      >
+        I want to read this book!
+      </button>
     </div>
   );
 };
 
 export default QuestionCard;
+

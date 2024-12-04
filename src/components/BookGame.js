@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import QuestionCard from './QuestionCard';
 import Scoreboard from './Scoreboard';
+import WantToReadList from './WantToReadList';
 
 const BookGame = () => {
   const [loading, setLoading] = useState(true);
@@ -10,6 +11,7 @@ const BookGame = () => {
   const [round, setRound] = useState(0);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+  const [wantToRead, setWantToRead] = useState([]);
 
   // The fetchBooks function is responsible for retrieving book data from the Open Library API, processing it, and handling potential errors.
   const fetchBooks = () => {
@@ -50,6 +52,38 @@ const BookGame = () => {
         setLoading(false);
         return [];
       });
+  };
+
+  // Effect to fetch books or load from localStorage
+  useEffect(() => {
+    const storedBooks = localStorage.getItem("books");
+    if (storedBooks) {
+      const parsedBooks = JSON.parse(storedBooks);
+      setBooks(parsedBooks);
+      startRound(parsedBooks);
+      setLoading(false);
+    } else {
+      fetchBooks("subject:fiction").then((fetchedBooks) => {
+        if (fetchedBooks.length > 0) {
+          setBooks(fetchedBooks);
+          startRound(fetchedBooks);
+        }
+      });
+    }
+  }, []);
+
+  // Add a book to the "Want to Read" list
+  const addToWantToRead = (book) => {
+    const updatedList = [...wantToRead, book];
+    setWantToRead(updatedList);
+    localStorage.setItem("want-to-read", JSON.stringify(updatedList));
+  };
+
+  // Remove a book from the "Want to Read" list
+  const removeFromWantToRead = (title) => {
+    const updatedList = wantToRead.filter((book) => book.title !== title);
+    setWantToRead(updatedList);
+    localStorage.setItem("want-to-read", JSON.stringify(updatedList));
   };
 
   // handleAnswer is a callback function that is triggered when a user selects an answer in the game
@@ -112,24 +146,7 @@ const BookGame = () => {
   };
 
 
-  // Effect to fetch books or load from localStorage
-  useEffect(() => {
-    const storedBooks = localStorage.getItem("books");
 
-    if (storedBooks) {
-      const parsedBooks = JSON.parse(storedBooks);
-      setBooks(parsedBooks);
-      startRound(parsedBooks);
-      setLoading(false); // Stop loading if books are loaded from localStorage
-    } else {
-      fetchBooks("subject:fiction").then((fetchedBooks) => {
-        if (fetchedBooks.length > 0) {
-          setBooks(fetchedBooks);
-          startRound(fetchedBooks);
-        }
-      });
-    }
-  }, []); // Empty dependency array means this effect runs once after the component mounts
 
   return (
     <div>
@@ -152,20 +169,21 @@ const BookGame = () => {
             </div>
           ) : (
             <>
-              <Scoreboard
-                round={round}
-                totalRounds={10}
-                score={score}
-                />
+              <Scoreboard round={round} totalRounds={10} score={score} />
               <QuestionCard
                 book={currentBook}
                 options={options}
                 onAnswer={(isCorrect) => handleAnswer(isCorrect)}
+                onAddToWantToRead={addToWantToRead} // Pass the addToWantToRead function as a prop
               />
             </>
           )}
         </>
       )}
+          <WantToReadList
+      books={wantToRead}
+      onRemove={removeFromWantToRead} // Pass the remove function as a prop
+          />
     </div>
   );
 };
