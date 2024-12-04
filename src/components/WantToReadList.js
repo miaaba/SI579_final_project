@@ -2,6 +2,8 @@ import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 
+// The WantToReadList component is responsible for displaying the user's reading list. It receives the list of books and the function to remove a book from the list as props. The component displays the list of books with a remove button for each book. If there are no books in the list, it displays a message indicating that no books have been added yet.
+
 const WantToReadList = ({ books, onRemove }) => {
   return (
     <div className="mt-4">

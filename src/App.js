@@ -12,8 +12,8 @@ function App() {
         <h1 className="display-4">Book Matching Game!</h1>
       </header>
       <main className="container my-4">
-        <h2 className="text-center">Can you match the book to its publication date?</h2>
-        <p className="text-center text-muted">Select the year the book was published</p>
+        <h2 className="text-center">Can you match the book to the first 10 words of the first sentence?</h2>
+        <p className="text-center text-muted">Select the mathcing sentence to the book</p>
         <hr />
         <BookGame />
       </main>

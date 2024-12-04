@@ -1,10 +1,10 @@
 import React from "react";
 
-// The QuestionCard component is responsible for displaying the book title, author, cover image, and answer options.
-
-// It also handles the user's selection of an answer and triggers the onAnswer callback function to determine if the answer is correct.
+// The QuestionCard component is responsible for displaying the current book and the options to choose from. It receives the current book, the options, and the functions to handle the answer and adding the book to the reading list as props. The handleOptionClick function is called when an option is clicked and checks if the selected option is correct. The QuestionCard component also includes a button to add the current book to the reading list.
 
 const QuestionCard = ({ book, options, onAnswer, onAddToWantToRead }) => {
+
+  // The handleOptionClick function is called when an option is clicked and checks if the selected option is correct. It calls the onAnswer function with a boolean value indicating whether the selected option is correct. The onAnswer function is passed as a prop to the QuestionCard component from the parent component (BookGame).
   const handleOptionClick = (option) => {
     const isCorrect = option === book.description;
     onAnswer(isCorrect);
@@ -21,6 +21,7 @@ const QuestionCard = ({ book, options, onAnswer, onAddToWantToRead }) => {
       />
       <p className="card-text mb-3">By: {book.author}</p>
       <div className="d-flex flex-row justify-content-around align-items-center w-100">
+        {/* Map over the options and display them as buttons. When a button is clicked, call the handleOptionClick function with the selected option. */}
         {options.map((option, index) => (
           <button
             key={index}
@@ -32,9 +33,10 @@ const QuestionCard = ({ book, options, onAnswer, onAddToWantToRead }) => {
         ))}
       </div>
       <button
+      // Add a button to add the current book to the reading list. When the button is clicked, call the onAddToWantToRead function with the current book as an argument. The onAddToWantToRead function is passed as a prop to the QuestionCard component from the parent component (BookGame).
         className="btn btn-primary mt-3 align-self-center"
         style={{ width: 200 }}
-        onClick={() => onAddToWantToRead(book)} // Call the function with the current book
+        onClick={() => onAddToWantToRead(book)}
       >
         I want to read this book!
       </button>
