@@ -89,7 +89,7 @@ const BookGame = () => {
   }, []);
 
 
-  // Add a book to the "Want to Read" list. This function is called when the user clicks the "I want to read this book!" button in the game. It checks to see if a book alrady exists on the list and alerts the user when the book is already there/ It adds the selected book to the wantToRead state and stores it in localStorage.
+  // Add a book to the "Want to Read" list. This function is called when the user clicks the "I want to read this book!" button in the game. It checks to see if a book alrady exists on the list and alerts the user when the book is already there. It adds the selected book to the wantToRead state and stores it in localStorage. It also displays an alert to confirm that the book has been added to the reading list.
   const addToWantToRead = (book) => {
     const bookExists = wantToRead.some((b) => b.title === book.title);
     if (bookExists) {

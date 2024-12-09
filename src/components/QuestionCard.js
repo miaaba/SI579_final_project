@@ -45,7 +45,7 @@ const QuestionCard = ({ book, options, onAnswer, onAddToWantToRead }) => {
       </div>
       <button
       // A button to add the current book to the reading list. When the button is clicked, call the onAddToWantToRead function with the current book as an argument. The onAddToWantToRead function is passed as a prop to the QuestionCard component from the parent component (BookGame).
-        className="btn btn-primary mt-3 align-self-center"
+        className="btn btn-success mt-3 align-self-center"
         style={{ width: 200 }}
         onClick={() => onAddToWantToRead(book)}
       >
