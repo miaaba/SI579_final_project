@@ -4,7 +4,11 @@ import Scoreboard from './Scoreboard';
 import WantToReadList from './WantToReadList';
 import { franc } from 'franc-min';
 
- // The BookGame component is responsible for managing the game state, including the current book, options, round, score, and game over status. It also handles the user's answers and the "Want to Read" list. The component fetches books from the Open Library API, processes them, and stores them in localStorage for caching. The component also includes the QuestionCard, Scoreboard, and WantToReadList components to display the game elements. The BookGame component is the main component that orchestrates the game logic and user interactions.
+ /**
+  * The BookGame component is responsible for managing the game state, including the current book, options, round, score, and game over status. It also handles the user's answers and the "Want to Read" list. The component fetches books from the Open Library API, processes them, and stores them in localStorage for caching. The component also includes the QuestionCard, Scoreboard, and WantToReadList components to display the game elements. The BookGame component is the main component that orchestrates the game logic and user interactions.
+  *
+  * @returns {JSX.Element} The BookGame component.
+  */
 
 const BookGame = () => {
   const [loading, setLoading] = useState(true);
@@ -85,11 +89,6 @@ const BookGame = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (!gameOver && books.length > 0) {
-      startRound(books);
-    }
-  }, [gameOver, books]);
 
   // Add a book to the "Want to Read" list. This function is called when the user clicks the "I want to read this book!" button in the game. It adds the selected book to the wantToRead state and stores it in localStorage.
   const addToWantToRead = (book) => {

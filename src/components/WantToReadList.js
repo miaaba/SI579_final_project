@@ -3,9 +3,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 
 /**
- * The WantToReadList component displays a list of books that the user wants to read.
- * Each book in the list shows its title, author, and a remove button.
- * If the list is empty, a placeholder message is displayed.
+ * The WantToReadList component displays a list of books that the user wants to read. Each book in the list shows its title, author, and a remove button.If the list is empty, a placeholder message is displayed.
  *
  * @param {Object} props - The component props.
  * @param {Array<{title: string, author: string}>} props.books - The list of books to display, each containing a title and an author.

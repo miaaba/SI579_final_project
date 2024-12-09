@@ -1,9 +1,7 @@
 import React from 'react';
 
 /**
- * The Scoreboard component displays the current round and score of the game.
- * It receives the round, totalRounds, and score as props and displays them.
- * The component is used in the BookGame component to show the game status.
+ * The Scoreboard component displays the current round and score of the game. It receives the round, totalRounds, and score as props and displays them. The component is used in the BookGame component to show the game status.
  *
  * @param {Object} props - The component props.
  * @param {number} props.round - The current round number.
