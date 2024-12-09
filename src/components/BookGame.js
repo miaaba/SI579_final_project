@@ -133,7 +133,6 @@ const BookGame = () => {
       setBooks(parsedBooks);
       startRound(parsedBooks);
     } else {
-
       fetchBooks().then((fetchedBooks) => {
         setBooks(fetchedBooks);
         if (fetchedBooks.length > 0) {
