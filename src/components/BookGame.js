@@ -85,6 +85,12 @@ const BookGame = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (!gameOver && books.length > 0) {
+      startRound(books);
+    }
+  }, [gameOver, books]);
+
   // Add a book to the "Want to Read" list. This function is called when the user clicks the "I want to read this book!" button in the game. It adds the selected book to the wantToRead state and stores it in localStorage.
   const addToWantToRead = (book) => {
     const updatedList = [...wantToRead, book];
