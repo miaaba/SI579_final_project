@@ -38,6 +38,7 @@ const BookGame = () => {
 
       const data = await response.json();
 
+      // Filter out non-English books and books without a first sentence
       const englishBooks = data.docs.filter(
         (book) =>
           book.first_sentence &&
