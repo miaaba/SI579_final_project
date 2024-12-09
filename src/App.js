@@ -3,7 +3,11 @@ import BookGame from "./components/BookGame";
 import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
+/**
+ * The App component is the main component that renders the header, BookGame component, and footer. It is the top-level component of the application.
+ *
+ * @returns {JSX.Element}- The App component.
+ */
 
 function App() {
   return (
