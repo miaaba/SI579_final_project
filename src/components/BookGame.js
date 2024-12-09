@@ -71,7 +71,6 @@ const BookGame = () => {
   };
 
   // Effect to fetch books or load from localStorage. This effect runs once when the component is mounted. It checks if there are cached books in localStorage and loads them if available. If not, it fetches new books using the fetchBooks function. The effect also starts a new round with the fetched books. The empty dependency array [] ensures that the effect runs only once when the component is mounted.
-
   useEffect(() => {
     const storedBooks = localStorage.getItem("books");
     if (storedBooks) {
@@ -90,12 +89,21 @@ const BookGame = () => {
   }, []);
 
 
-  // Add a book to the "Want to Read" list. This function is called when the user clicks the "I want to read this book!" button in the game. It adds the selected book to the wantToRead state and stores it in localStorage.
+  // Add a book to the "Want to Read" list. This function is called when the user clicks the "I want to read this book!" button in the game. It checks to see if a book alrady exists on the list and alerts the user when the book is already there/ It adds the selected book to the wantToRead state and stores it in localStorage.
   const addToWantToRead = (book) => {
+    const bookExists = wantToRead.some((b) => b.title === book.title);
+    if (bookExists) {
+      alert("This book is already in your reading list!");
+      return;
+    }
+
     const updatedList = [...wantToRead, book];
     setWantToRead(updatedList);
     localStorage.setItem("want-to-read", JSON.stringify(updatedList));
+
+    alert("Book added to your reading list!");
   };
+
 
   // Remove a book from the "Want to Read" list. This function is called when the user clicks the "Remove" button next to a book in the "Want to Read" list. It filters out the book to be removed and updates the wantToRead state and localStorage.
   const removeFromWantToRead = (title) => {
