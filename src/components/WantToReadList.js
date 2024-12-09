@@ -3,7 +3,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 
 /**
- * The WantToReadList component displays a list of books that the user wants to read. Each book in the list shows its title, author, and a remove button.If the list is empty, a placeholder message is displayed.
+ * The WantToReadList component receives the books and onRemove function as props. It displays a list of books with their title and author. For each book, a remove button is displayed that triggers the onRemove function when clicked. The onRemove function is passed as a prop from the parent component (BookGame) and removes the book from the reading list.
  *
  * @param {Object} props - The component props.
  * @param {Array<{title: string, author: string}>} props.books - The list of books to display, each containing a title and an author.
@@ -12,6 +12,7 @@ import Button from 'react-bootstrap/Button';
  *
  * @returns {JSX.Element} A list of books with a remove button for each.
  */
+
 const WantToReadList = ({ books, onRemove }) => {
   return (
     <div className="mt-4">
