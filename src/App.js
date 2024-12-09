@@ -9,11 +9,11 @@ function App() {
   return (
     <div className="App">
       <header className=" text-center bg-primary text-white py-3">
-        <h1 className="display-4">Book Matching Game!</h1>
+        <h1 className="display-4">📚 Book Matching Game! 📚</h1>
       </header>
       <main className="container my-4">
         <h2 className="text-center">Can you match the book to the first 10 words of the first sentence?</h2>
-        <p className="text-center text-muted">Select the mathcing sentence to the book</p>
+        <p className="text-center text-muted">Select the matching sentence to the book</p>
         <hr />
         <BookGame />
       </main>
